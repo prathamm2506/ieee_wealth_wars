@@ -22,6 +22,7 @@ const App = () => {
   return (
     <div>
       {routes}
+      <h1>hi</h1>
     </div>
   )
 }
