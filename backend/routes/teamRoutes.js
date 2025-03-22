@@ -131,6 +131,77 @@ router.get("/:teamNumber", async (req, res) => {
     }
 });
 
+// increase all assets by 10%
+router.put("/increase-assets", async (req, res) => {
+    try {
+        const teams = await Team.find(); // Fetch all teams
+
+        for (let team of teams) {
+            if (team.assets.length > 0) {
+                team.assets = team.assets.map(asset => ({
+                    ...asset,
+                    value: Math.round(asset.value * 1.1) // Increase by 10% and round
+                }));
+
+                // Recalculate valuation
+                const assetsTotal = team.assets.reduce((sum, asset) => sum + asset.value, 0);
+                const tendersTotal = team.tenders.reduce((sum, tender) => sum + tender.value, 0);
+                team.valuation = team.wallet + assetsTotal + tendersTotal;
+
+                await team.save(); // Save updated team
+            }
+        }
+
+        res.status(200).json({ message: "All assets increased by 10%" });
+    } catch (error) {
+        console.error("Error updating asset values:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+// crises reduction by X%
+router.put("/reduce-assets", async (req, res) => {
+    try {
+        const { assetNames, percentage } = req.body;
+
+        if (!assetNames || assetNames.length !== 10 || percentage <= 0) {
+            return res.status(400).json({ message: "Select exactly 10 assets and provide a valid percentage." });
+        }
+
+        const teams = await Team.find(); // Fetch all teams
+        let updatedCount = 0;
+
+        for (let team of teams) {
+            let modified = false;
+
+            team.assets = team.assets.map(asset => {
+                if (assetNames.includes(asset.name)) {
+                    asset.value = Math.round(asset.value * (1 - percentage / 100)); // Reduce value by X%
+                    modified = true;
+                }
+                return asset;
+            });
+
+            if (modified) {
+                // Recalculate valuation
+                const assetsTotal = team.assets.reduce((sum, asset) => sum + asset.value, 0);
+                const tendersTotal = team.tenders.reduce((sum, tender) => sum + tender.value, 0);
+                team.valuation = team.wallet + assetsTotal + tendersTotal;
+
+                await team.save(); // Save updated team
+                updatedCount++;
+            }
+        }
+
+        res.status(200).json({ message: `Reduced prices of ${updatedCount} assets successfully` });
+    } catch (error) {
+        console.error("Error reducing asset prices:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+
+
 
 
 

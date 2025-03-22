@@ -17,7 +17,7 @@ const UserPage = () => {
             // Set up periodic data refresh
             const interval = setInterval(() => {
                 fetchLatestTeamData(parsedTeam.teamNumber);
-            }, 5000);
+            }, 30000);
 
             return () => clearInterval(interval); // Cleanup interval
         } else {

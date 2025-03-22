@@ -4,6 +4,7 @@ import Login from './pages/login/Login'
 import SignUp from './pages/signup/SignUp'
 import UserPage from './pages/userpage/UserPage'
 import Dashboaord from './pages/dashboard/Dashboaord'
+import Master from './pages/master/Master'
 
 const routes = (
   <Router>
@@ -12,6 +13,7 @@ const routes = (
       <Route path='/signup' exact element={<SignUp/>}/>
       <Route path='/user' exact element={<UserPage/>}/>
       <Route path='/dashboard' exact element={<Dashboaord/>}/>
+      <Route path='/master' exact element={<Master/>}/>
     </Routes>
   </Router>
 )

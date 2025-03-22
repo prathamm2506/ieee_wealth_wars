@@ -22,7 +22,13 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        fetchTeams();
+        fetchTeams(); // Initial fetch
+
+        const interval = setInterval(() => {
+            fetchTeams();
+        }, 30000); // Auto-refresh every 30 seconds
+
+        return () => clearInterval(interval); // Cleanup on unmount
     }, []);
 
     return (
