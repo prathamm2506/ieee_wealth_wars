@@ -10,7 +10,7 @@ const Dashboard = () => {
 
     const fetchTeams = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/teams/all");
+            const response = await fetch("https://ieee-wealth-wars-backend.onrender.com/api/teams/all");
             if (!response.ok) {
                 throw new Error("Failed to fetch teams");
             }
@@ -55,7 +55,7 @@ const Dashboard = () => {
     useEffect(() => {
       const fetchAndUpdateTeams = async () => {
           try {
-              const response = await fetch("http://localhost:5000/api/teams/all");
+              const response = await fetch("https://ieee-wealth-wars-backend.onrender.com/api/teams/all");
               if (!response.ok) {
                   throw new Error("Failed to fetch teams");
               }

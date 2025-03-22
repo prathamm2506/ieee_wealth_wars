@@ -57,7 +57,7 @@ const SignUp = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/teams/signup", teamData);
+      const response = await axios.post("https://ieee-wealth-wars-backend.onrender.com/api/teams/signup", teamData);
       setMessage(response.data.message);
       
       // Clear the form on successful registration

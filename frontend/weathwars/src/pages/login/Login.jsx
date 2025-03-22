@@ -11,7 +11,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/teams/login", {
+      const response = await fetch("https://ieee-wealth-wars-backend.onrender.com/api/teams/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teamNumber, password }),

@@ -27,7 +27,7 @@ const UserPage = () => {
 
     const fetchLatestTeamData = async (teamNumber) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/teams/${teamNumber}`);
+            const response = await fetch(`https://ieee-wealth-wars-backend.onrender.com/api/teams/${teamNumber}`);
             if (!response.ok) throw new Error("Failed to fetch team data");
 
             const updatedData = await response.json();

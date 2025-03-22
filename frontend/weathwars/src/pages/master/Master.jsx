@@ -14,7 +14,7 @@ const Master = () => {
 
   const fetchTeams = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/teams/all");
+      const response = await fetch("https://ieee-wealth-wars-backend.onrender.com/api/teams/all");
       if (!response.ok) throw new Error("Failed to fetch teams");
 
       const teamsData = await response.json();
@@ -28,7 +28,7 @@ const Master = () => {
   const increaseAssets = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/teams/increase-assets", {
+      const response = await fetch("https://ieee-wealth-wars-backend.onrender.com/api/teams/increase-assets", {
         method: "PUT",
       });
 
@@ -66,7 +66,7 @@ const Master = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/teams/reduce-assets", {
+      const response = await fetch("https://ieee-wealth-wars-backend.onrender.com/api/teams/reduce-assets", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ assetNames: selectedAssetNames, percentage }),

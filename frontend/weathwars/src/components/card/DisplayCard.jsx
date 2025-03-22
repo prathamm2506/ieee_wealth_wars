@@ -32,7 +32,7 @@ const DisplayCard = ({ teams, onUpdate }) => {
   // Save updated data to backend
   const handleSave = async () => {
     try {
-        const response = await fetch(`http://localhost:5000/api/teams/edit/${selectedTeam.teamNumber}`, {
+        const response = await fetch(`https://ieee-wealth-wars-backend.onrender.com/api/teams/edit/${selectedTeam.teamNumber}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
