@@ -124,7 +124,8 @@ const DisplayCard = ({ teams, onUpdate }) => {
               <input type="number" name="wallet" value={selectedTeam.wallet} onChange={handleChange} className="w-full p-2 mb-2 border rounded" />
 
               <label className="block text-sm font-semibold">Alliance Name</label>
-              <input type="text" name="teamAlliance" value={selectedTeam.teamAlliance || ""} onChange={handleChange} className="w-full p-2 mb-2 border rounded" />
+              <input type="text" name="allianceName" value={selectedTeam.allianceName || ""} onChange={handleChange} className="w-full p-2 mb-2 border rounded"/>
+
 
               {/* Editable Assets */}
               {selectedTeam.assets?.length > 0 && (
