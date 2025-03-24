@@ -1,4 +1,14 @@
 import React, { useState } from "react";
+import Select from "react-select";
+
+const assetOptions = [
+  "Branch Offices", "ATMs", "Data Centers", "Government Bonds", "Corporate Loans", "Mortgage Portfolios",
+  "Cloud Servers (AWS, Azure, GCP)", "On-Premise Data Center", "Networking Equipment", "Cybersecurity Suite",
+  "AI & Data Scientists", "Hospitals", "Medical Laboratories", "MRI Machines", "Electronic Health Record (EHR) Systems",
+  "Telemedicine Platforms", "Commercial Buildings", "Residential Apartments", "Shopping Malls", "Industrial Warehouses",
+  "Co-Working Spaces", "Power Plants", "Solar Farms", "Electric Vehicle Charging Stations", "Smart Grid Infrastructure",
+  "Battery Storage Systems"
+].map(asset => ({ label: asset, value: asset }));
 
 const DisplayCard = ({ teams, onUpdate }) => {
   const [selectedTeam, setSelectedTeam] = useState(null);
@@ -15,6 +25,23 @@ const DisplayCard = ({ teams, onUpdate }) => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleAssetChange = (selectedOption, index) => {
+    setSelectedTeam((prev) => {
+      const updatedAssets = [...prev.assets];
+      updatedAssets[index] = { ...updatedAssets[index], name: selectedOption.value };
+      return { ...prev, assets: updatedAssets };
+    });
+  };
+
+  const handleValueChange = (e, index) => {
+    const { value } = e.target;
+    setSelectedTeam((prev) => {
+      const updatedAssets = [...prev.assets];
+      updatedAssets[index] = { ...updatedAssets[index], value: value };
+      return { ...prev, assets: updatedAssets };
+    });
   };
 
   const handleNestedChange = (e, index, type) => {
@@ -139,8 +166,19 @@ const DisplayCard = ({ teams, onUpdate }) => {
                   <h4 className="text-lg font-semibold mt-3">Assets</h4>
                   {selectedTeam.assets.map((asset, index) => (
                     <div key={index} className="flex gap-2 mb-2">
-                      <input type="text" name="name" value={asset.name} onChange={(e) => handleNestedChange(e, index, "assets")} className="w-1/2 p-2 border rounded" placeholder="Asset Name" />
-                      <input type="number" name="value" value={asset.value} onChange={(e) => handleNestedChange(e, index, "assets")} className="w-1/2 p-2 border rounded" placeholder="Value" />
+                      <Select
+                        options={assetOptions}
+                        value={assetOptions.find((opt) => opt.value === asset.name)}
+                        onChange={(selectedOption) => handleAssetChange(selectedOption, index)}
+                        className="w-1/2"
+                      />
+                      <input
+                        type="number"
+                        value={asset.value}
+                        onChange={(e) => handleValueChange(e, index)}
+                        className="w-1/2 p-2 border rounded"
+                        placeholder="Value"
+                      />
                     </div>
                   ))}
                 </>
