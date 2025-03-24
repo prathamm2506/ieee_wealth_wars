@@ -7,7 +7,7 @@ const assetOptions = [
   "AI & Data Scientists", "Hospitals", "Medical Laboratories", "MRI Machines", "Electronic Health Record (EHR) Systems",
   "Telemedicine Platforms", "Commercial Buildings", "Residential Apartments", "Shopping Malls", "Industrial Warehouses",
   "Co-Working Spaces", "Power Plants", "Solar Farms", "Electric Vehicle Charging Stations", "Smart Grid Infrastructure",
-  "Battery Storage Systems"
+  "Battery Storage Systems","None"
 ].map(asset => ({ label: asset, value: asset }));
 
 const DisplayCard = ({ teams, onUpdate }) => {
