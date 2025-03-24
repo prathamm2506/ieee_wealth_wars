@@ -4,13 +4,11 @@ const DisplayCard = ({ teams, onUpdate }) => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Open modal and clone team data for editing
   const openEditModal = (team) => {
     setSelectedTeam({ ...team });
     setIsModalOpen(true);
   };
 
-  // Handle input changes in the modal
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSelectedTeam((prev) => ({
@@ -19,7 +17,6 @@ const DisplayCard = ({ teams, onUpdate }) => {
     }));
   };
 
-  // Handle asset and tender updates
   const handleNestedChange = (e, index, type) => {
     const { name, value } = e.target;
     setSelectedTeam((prev) => {
@@ -29,32 +26,29 @@ const DisplayCard = ({ teams, onUpdate }) => {
     });
   };
 
-  // Save updated data to backend
   const handleSave = async () => {
     try {
-        const response = await fetch(`https://ieee-wealth-wars-backend.onrender.com/api/teams/edit/${selectedTeam.teamNumber}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                wallet: selectedTeam.wallet,
-                assets: selectedTeam.assets,
-                tenders: selectedTeam.tenders,
-                allianceName: selectedTeam.allianceName
-            }),
-        });
+      const response = await fetch(`https://ieee-wealth-wars-backend.onrender.com/api/teams/edit/${selectedTeam.teamNumber}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          wallet: selectedTeam.wallet,
+          assets: selectedTeam.assets,
+          tenders: selectedTeam.tenders,
+          allianceName: selectedTeam.allianceName
+        }),
+      });
 
-        if (!response.ok) throw new Error("Failed to update team");
+      if (!response.ok) throw new Error("Failed to update team");
 
-        onUpdate(); // Refresh data in the parent component
-        closeModal();
+      onUpdate();
+      closeModal();
     } catch (error) {
-        console.error(error);
-        alert("Error updating team!");
+      console.error(error);
+      alert("Error updating team!");
     }
-};
+  };
 
-
-  // Close modal
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedTeam(null);
@@ -67,14 +61,20 @@ const DisplayCard = ({ teams, onUpdate }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {teams.map((team) => (
           <div key={team._id} className="bg-white p-5 rounded-lg shadow-md border">
-            <h3 className="text-xl font-bold text-gray-800 mb-2">
-              {team.teamName} (#{team.teamNumber})
-            </h3>
-            <p className="text-gray-700"><strong>Wallet:</strong> ₹{team.wallet}</p>
-            <p className="text-gray-700"><strong>Valuation:</strong> ₹{team.valuation}</p>
-            <p className="text-gray-700"><strong>Alliance:</strong> {team.allianceName || "None"}</p>
+            <div className="flex justify-between">
+              <h3 className="text-xl font-bold text-gray-800">
+                {team.teamName}
+              </h3>
+              <span className="text-gray-600">#{team.teamNumber}</span>
+            </div>
 
-            {/* Assets Section */}
+            <div className="flex justify-between mt-2">
+              <p className="text-gray-700"><strong>Wallet:</strong> ₹{team.wallet}</p>
+              <p className="text-gray-700"><strong>Alliance:</strong> {team.allianceName || "None"}</p>
+            </div>
+
+            <p className="text-gray-700 mt-2"><strong>Valuation:</strong> ₹{team.valuation}</p>
+
             {team.assets?.length > 0 && (
               <div className="mt-3">
                 <h4 className="text-lg font-semibold text-gray-800">Assets</h4>
@@ -86,7 +86,6 @@ const DisplayCard = ({ teams, onUpdate }) => {
               </div>
             )}
 
-            {/* Tenders Section */}
             {team.tenders?.length > 0 && (
               <div className="mt-3">
                 <h4 className="text-lg font-semibold text-gray-800">Tenders</h4>
@@ -108,26 +107,33 @@ const DisplayCard = ({ teams, onUpdate }) => {
         ))}
       </div>
 
-      {/* Edit Team Modal */}
       {isModalOpen && selectedTeam && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg w-96">
+          <div className="bg-white p-6 rounded-lg w-1/3">
             <h2 className="text-xl font-bold mb-4">Edit Team</h2>
             <form>
-              <label className="block text-sm font-semibold">Team Number</label>
-              <input type="text" value={selectedTeam.teamNumber} className="w-full p-2 mb-2 border rounded" disabled />
+              <div className="flex gap-2">
+                <div className="w-1/2">
+                  <label className="block text-sm font-semibold">Team Number</label>
+                  <input type="text" value={selectedTeam.teamNumber} className="w-full p-2 mb-2 border rounded" disabled />
+                </div>
+                <div className="w-1/2">
+                  <label className="block text-sm font-semibold">Team Name</label>
+                  <input type="text" name="teamName" value={selectedTeam.teamName} onChange={handleChange} className="w-full p-2 mb-2 border rounded" />
+                </div>
+              </div>
 
-              <label className="block text-sm font-semibold">Team Name</label>
-              <input type="text" name="teamName" value={selectedTeam.teamName} onChange={handleChange} className="w-full p-2 mb-2 border rounded" />
+              <div className="flex gap-2">
+                <div className="w-1/2">
+                  <label className="block text-sm font-semibold">Wallet</label>
+                  <input type="number" name="wallet" value={selectedTeam.wallet} onChange={handleChange} className="w-full p-2 mb-2 border rounded" />
+                </div>
+                <div className="w-1/2">
+                  <label className="block text-sm font-semibold">Alliance Name</label>
+                  <input type="text" name="allianceName" value={selectedTeam.allianceName || ""} onChange={handleChange} className="w-full p-2 mb-2 border rounded" />
+                </div>
+              </div>
 
-              <label className="block text-sm font-semibold">Wallet</label>
-              <input type="number" name="wallet" value={selectedTeam.wallet} onChange={handleChange} className="w-full p-2 mb-2 border rounded" />
-
-              <label className="block text-sm font-semibold">Alliance Name</label>
-              <input type="text" name="allianceName" value={selectedTeam.allianceName || ""} onChange={handleChange} className="w-full p-2 mb-2 border rounded"/>
-
-
-              {/* Editable Assets */}
               {selectedTeam.assets?.length > 0 && (
                 <>
                   <h4 className="text-lg font-semibold mt-3">Assets</h4>
@@ -140,7 +146,6 @@ const DisplayCard = ({ teams, onUpdate }) => {
                 </>
               )}
 
-              {/* Editable Tenders */}
               {selectedTeam.tenders?.length > 0 && (
                 <>
                   <h4 className="text-lg font-semibold mt-3">Tenders</h4>
