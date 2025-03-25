@@ -7,7 +7,7 @@ const assetOptions = [
   "AI & Data Scientists", "Hospitals", "Medical Laboratories", "MRI Machines", "Electronic Health Record (EHR) Systems",
   "Telemedicine Platforms", "Commercial Buildings", "Residential Apartments", "Shopping Malls", "Industrial Warehouses",
   "Co-Working Spaces", "Power Plants", "Solar Farms", "Electric Vehicle Charging Stations", "Smart Grid Infrastructure",
-  "Battery Storage Systems","None"
+  "Battery Storage Systems","None","AI-Powered Customer Service Assistant", "Robotic Process Automation Systems", "Biometric Authentication Platform", "Cloud-based Core Banking System", "Quantum Computing integration platform", "Blockchain based security system", "Edge computing infra", "Adaptive cybersecurity system with AI","Human digitl twin system", "AR surgical navigation system", "AI powered drug discovery platform", "Blockchain health data exchange system", "AR Property showcase","Automated property management platform","AI Powered property valuation platform", "Blockchain-based property transaction platform", "Green hydrogen production and Distribution facility","Fusion Energy Pilot Plants","Advanced energy storage system","AI Driven Energy Management Platform"
 ].map(asset => ({ label: asset, value: asset }));
 
 const DisplayCard = ({ teams, onUpdate }) => {
