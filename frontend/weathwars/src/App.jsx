@@ -12,11 +12,11 @@ const App = () => {
       <div>
         <Routes>
           <Route path='/' exact element={<SignUp />} />
-          <Route path='/login' exact element={<Login />} />
-          <Route path='/signup' exact element={<SignUp />} />
-          <Route path='/user' exact element={<UserPage />} />
-          <Route path='/dashboardforthecouncilonly' exact element={<Dashboaord />} />
-          <Route path='/masterforthemasteronly' exact element={<Master />} />
+          <Route path='/loginf' exact element={<Login />} />
+          <Route path='/signupf' exact element={<SignUp />} />
+          <Route path='/userf' exact element={<UserPage />} />
+          <Route path='/dashboardforthecouncilonlyf' exact element={<Dashboaord />} />
+          <Route path='/masterforthemasteronlyf' exact element={<Master />} />
         </Routes>
         {/* <h1>hi</h1> */}
         {/* <Link to='/login'>Login</Link> */}
